@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet("/board/list")
-public class BoardListServlet extends HttpServlet {
+@WebServlet("/board/detail")
+public class BoardDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        List<BoardVO> list = BoardDAO.getList();
-        req.setAttribute("list",list); //기존방법
-/*
-        HttpSession session = req.getSession();
-        session.setAttribute("list",list);//session이용
-*/
-        MyUtils.disForward(req,res,"board/list");
+        BoardVO vo = new BoardVO();
+//        MyUtils.getParameterInt(req, "pk")
+//        MyUtils.parseStringToInt(req.getParameter("iboard"))
+        vo.setIboard(MyUtils.getParameterInt(req, "iboard"));
+        req.setAttribute("board",BoardDAO.oneBoard(vo));
+        MyUtils.disForward(req,res,"board/detail");
+
     }
 
     @Override

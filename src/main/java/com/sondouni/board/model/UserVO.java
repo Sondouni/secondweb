@@ -7,6 +7,15 @@ public class UserVO {
     private String nm;
     private int gender;
     private String rdt;
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public int getIuser() {
         return iuser;

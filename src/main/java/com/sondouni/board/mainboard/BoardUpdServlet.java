@@ -1,6 +1,7 @@
 package com.sondouni.board.mainboard;
 
 import com.sondouni.board.model.BoardVO;
+import com.sondouni.board.model.UserVO;
 import com.sondouni.board.user.MyUtils;
 
 import javax.servlet.ServletException;
@@ -10,23 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet("/board/list")
-public class BoardListServlet extends HttpServlet {
+@WebServlet("/board/change")
+public class BoardUpdServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        List<BoardVO> list = BoardDAO.getList();
-        req.setAttribute("list",list); //기존방법
-/*
         HttpSession session = req.getSession();
-        session.setAttribute("list",list);//session이용
-*/
-        MyUtils.disForward(req,res,"board/list");
+        UserVO uvo = (UserVO)session.getAttribute("loginUser");
+        BoardVO vo = new BoardVO();
+        vo.setIboard(MyUtils.getParameterInt(req,"ibaord"));
+        vo.setWirter(uvo.getIuser());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        BoardVO vo = new BoardVO();
 
     }
 }

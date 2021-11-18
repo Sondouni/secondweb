@@ -2,11 +2,32 @@ package com.sondouni.board.model;
 
 public class BoardVO {
     private int iboard;
+//    private int iuser;
     private String title;
     private String ctnt;
-    private String wirter;
+    private int wirter;
     private String rdt;
     private String mdt;
+    //닉네임? id값
+    private String iid;
+
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(String iid) {
+        this.iid = iid;
+    }
+
+/*
+    public int getIuser() {
+        return iuser;
+    }
+
+    public void setIuser(int iuser) {
+        this.iuser = iuser;
+    }
+*/
 
     public int getIboard() {
         return iboard;
@@ -32,11 +53,11 @@ public class BoardVO {
         this.ctnt = ctnt;
     }
 
-    public String getWirter() {
+    public int getWirter() {
         return wirter;
     }
 
-    public void setWirter(String wirter) {
+    public void setWirter(int wirter) {
         this.wirter = wirter;
     }
 
