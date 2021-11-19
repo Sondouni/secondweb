@@ -44,9 +44,9 @@ public class BoardWriteServlet extends HttpServlet {
                 break;
             case 0:
                 req.setAttribute("error","fail to write");
+                req.setAttribute("wrtData",vo);
                 doGet(req,res);
                 break;
-
         }
         //주소이동
     }

@@ -6,6 +6,7 @@
     UserVO loginUser = (UserVO)session.getAttribute("loginUser");
     String msg = (String)session.getAttribute("msg");
     List<BoardVO> list = (List<BoardVO>)request.getAttribute("list");
+    int pageNum = (int)request.getAttribute("maxPage");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -21,7 +22,7 @@
         .table { border-collapse: collapse ; border: 1px solid #000; }
         html,body { margin: 0; padding: 0; height: 100%; }
         .box { height : 100%;background-color : rgb(204, 203, 203); display: flex; justify-content: center; align-items: center; flex-direction: column }
-        .listbox { background-color: #fff; height: 800px;width: 800px; border :1px solid #000;display: flex;  align-items: center;flex-direction: column }
+        .listbox { background-color: #fff; height: 800px;width: 800px; border :1px solid #000;display: flex; justify-content: center; align-items: center;flex-direction: column }
     </style>
 </head>
 <body >
@@ -54,9 +55,12 @@
                     </tr>
                     <%}%>
                 </table>
-
-            <div><a href="/board/write"><input type="button" value="write"></a></div>
-        </div>
+            <a href="/board/write"><input type="button" value="write"></a>
+            <%for(int i = 1;i<=pageNum;i++){%>
+                <span style="margin-top: 20px">
+                    <a href="/board/list?page=<%=i%>"><%=i%>&nbsp;</a>
+                <span/>
+            <%}%>
     </div>
 </body>
 </html>

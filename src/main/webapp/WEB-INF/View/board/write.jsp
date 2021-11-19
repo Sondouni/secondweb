@@ -1,4 +1,5 @@
 <%@ page import="com.sondouni.board.model.UserVO" %>
+<%@ page import="com.sondouni.board.model.BoardVO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     UserVO uvo = (UserVO)session.getAttribute("loginUser");
@@ -18,18 +19,16 @@
     </style>
 </head>
 <body>
-    <% if(err!=null){%>
-    <script>
-        alert(<%= err %>)
-    </script>
-    <%}%>
     <div class="box">
         <div class="writeBox">
+            <% if(err!=null){%>
+            <div><%=err%></div>
+            <%}%>
             <h1>Write</h1>
             <form class="context" action="/board/write" method="post">
-                <div><input type="text" placeholder="title" name="title"></div>
+                <div><input type="text" placeholder="title" value="${requestScope.wrtData.title}" name="title"></div>
                 <div>
-                    <textarea name="ctnt" placeholder="context" rows="10"></textarea>
+                    <textarea name="ctnt" placeholder="context" rows="10">${requestScope.wrtData.ctnt}</textarea>
                 </div>
                 <div><input type="text" value="<%=uvo.getUid()%>" name="title" disabled></div>
                 <div>

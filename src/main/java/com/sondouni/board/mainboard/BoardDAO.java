@@ -1,6 +1,7 @@
 package com.sondouni.board.mainboard;
 
 import com.sondouni.board.DButils;
+import com.sondouni.board.model.BoardParamVO;
 import com.sondouni.board.model.BoardVO;
 import com.sondouni.board.user.MyUtils;
 
@@ -12,10 +13,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDAO {
+    public static int selMaxPage(BoardParamVO param){
+        Connection con = null;
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+        String sql = " SELECT CEIL(COUNT(*)/?)  FROM t_board ";
+        try {
+            con = DButils.getCon();
+            pr = con.prepareStatement(sql);
+            pr.setInt(1,param.getRecordCnt());
+            rs = pr.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            DButils.close(con,pr,rs);
+        }
+        return 0;
+    }
     public static int chgBoard(BoardVO vo){
         Connection con = null;
         PreparedStatement pr = null;
-        String sql = " UPDATE t_board set title = ?, ctnt = ?, mdt = ? where iboard = ? and writer = ? ";
+        String sql = " UPDATE t_board set title = ?, ctnt = ?, rdt = ? where iboard = ? and writer = ? ";
         try {
             con = DButils.getCon();
             pr = con.prepareStatement(sql);
@@ -108,7 +131,7 @@ public class BoardDAO {
         }
         return 0;
     }
-    public static List<BoardVO> getList(){
+    public static List<BoardVO> getList(BoardParamVO pvo){
         List<BoardVO> list = new ArrayList();
         Connection con = null;
         PreparedStatement pr = null;
@@ -116,10 +139,13 @@ public class BoardDAO {
         String sql = " SELECT A.iboard,A.title,A.rdt,B.uid FROM t_board A " +
                 " INNER JOIN t_user B " +
                 " ON A.writer = B.iuser " +
-                " order by iboard desc ";
+                " order by iboard desc " +
+                " LIMIT ?,? ";
         try {
             con = DButils.getCon();
             pr = con.prepareStatement(sql);
+            pr.setInt(1,pvo.getsIdx());
+            pr.setInt(2,pvo.getRecordCnt());
             rs = pr.executeQuery();
             while (rs.next()){
                 BoardVO vo = new BoardVO();
